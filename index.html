@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="moonphase.js"></script>
+  <link rel="stylesheet" href="moonphase.css">
+</head>
+<body>
+  <svg id='moonPhase'>
+    <circle id='moonIllum' r='50'cy='100'cx='150'fill='#fff6d5'/>
+    <circle id='moonShade' r='50'cy='100'cx='150'fill='#1a1a1a'/>
+    <path id='moonFrame'd='M 0,0 V 200.0002 H 300.00028 V 0 Z m 150.00014,50.000047 a 50,50 0 0 1 50.00005,50.000053 50,50 0 0 1 -50.00005,50.00005 50,50 0 0 1 -50.00005,-50.00005 50,50 0 0 1 50.00005,-50.000053 z'/>
+    </svg>
+  <div id="calculatorContainer">
+    <header><h1>Moon Age Calculator</h1></header>
+    <br>
+    <p>Note: calculations update in real time. Lunar Age and Illumination calculations are rounded, so not noticeable.</p>
+    <input type="text" id="dateInput" name="input" placeholder="Type date here (e.g. for Jan 7 1970,type '7')"></textarea>
+    <br>
+    <button id="day">Find Days since specified Day of 1970</button>
+    <br>
+    <p id="daysSince"></p>
+    <br>
+    <button type="button" id="lunationButton" name="lunation" >Find Lunation Number</button>
+    <br>
+    <p id="lunation"></p>
+    <br>
+    <button type="button" id="lunarAgeButton" name="lunarAge" >Find Lunar Age</button>
+    <label for="lunarAgeButton" id="findLunarAge" >(represents percentage of lunation complete)</label>
+    <br>
+    <p id="lunarAge" ></p>
+    <br>
+    <button type="button" id="illButton" name="ill" >Find Moon Illumination</button>
+    <br>
+    <p id="ill" ></p>
+
+  </div>
+</body>
+</html>
