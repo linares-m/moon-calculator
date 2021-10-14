@@ -1,0 +1,49 @@
+body {
+  background-color: black;
+  color: white;
+  font-size: 15px;
+  width: 100vw;
+  height: 100vh;
+  margin-left:auto;
+  margin-right:auto;
+}
+#moonPhase {
+  display:block;
+  position:absolute;
+  top:70%;
+  left:90%;
+  transform: scale(4);
+  width: 600px;
+  height: 400px;
+  margin:10px;
+  z-index: -1;
+}
+
+#moonShade {
+  transition: 3s;
+}
+#calculatorContainer{
+  display:block;
+  width: 700px;
+  margin: 50px auto 0 auto;
+}
+
+input {
+  background-color: black;
+  color: white;
+  outline: 1px solid white;
+  font-size: 20px;
+  width: 400px;
+}
+button {
+  background-color: black;
+  color: white;
+  outline: 1px solid white;
+  font-size: 20px;
+}
+p {
+  background-color: black;
+  color: white;
+  font-size: 20px;
+  width: min-content;
+}
