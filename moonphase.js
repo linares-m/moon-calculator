@@ -14,7 +14,7 @@ function calcLunationNumber(date){
 }
 // modulus to find lunar age, or the percent of current lunar cycle complete.
 function calcCurrentLunarAge(date){
-  let la = (calcLunationNumber(date) % Math.floor(calcLunationNumber(date))).toPrecision(4);
+  let la = ((calcLunationNumber(date) % Math.floor(calcLunationNumber(date))).toPrecision(4))*29;
   console.log(Math.floor(calcLunationNumber(date)));
   return la;
 }
@@ -32,9 +32,9 @@ function calcMoonIllumination(date){
 
 function posMoon(){
   var n = Date.now(),
-      d = (1000*60*60*24),
-      t = (n/d);
-      diff = t - (6-1);
+  d = (1000*60*60*24),
+  t = (n/d);
+  diff = t - (6-1);
   const lunation = 29.53;
   var l = diff/lunation;
   let la = (l % Math.floor(l)).toPrecision(4);
@@ -48,10 +48,11 @@ function posMoon(){
   }
 }
 window.addEventListener("DOMContentLoaded", () =>{
-  setTimeout(moonShift, 1000);
+  setTimeout(moonShift, 800);
   function moonShift(){
     document.getElementById('moonShade').setAttribute('cx', (50+posMoon()));
-}
+    document.getElementById('moonAge').text = "Today's Lunar Illumination"
+  }
   document.getElementById('day').addEventListener('click', ()=>{
     let date = document.getElementById('dateInput').value;
     if (1 < date <= 365){
@@ -68,10 +69,13 @@ window.addEventListener("DOMContentLoaded", () =>{
   })
   document.getElementById('lunarAgeButton').addEventListener('click', ()=>{
     let date = document.getElementById('dateInput').value;
-    document.getElementById('lunarAge').innerHTML = calcCurrentLunarAge(date) + ' ';
+    document.getElementById('lunarAge').innerHTML = calcCurrentLunarAge(date) + ' Days';
+    
   })
   document.getElementById('illButton').addEventListener('click', ()=>{
     let date = document.getElementById('dateInput').value;
     document.getElementById('ill').innerHTML = calcMoonIllumination(date).toPrecision(4) + ' ';
+    
+    
   })
 })
