@@ -1,27 +1,33 @@
-//getTime outputs milliseconds since 1/1/1970; convert to days;
-//find difference in days between input date and 1/1/1970
+//'lunation' is a complete moon cycle and is approx. 29.53 days long
+  const lunation = 29.53;
+//basis of all calculations is using time elapsed since Jan 1 1970 as a reference point;
 function daysSince1970Date(date){
+//get time elapsed since Jan 1 1970 in milliseconds:
   var n = Date.now(),
+//convert ms to days:
   d = (1000*60*60*24),
   t = (n/d);
+//subtract date specified (e.g. day 7, or Jan 7 1970) from Jan 1 1970;
+//note we subtract 1 from the date to exclude Jan 1:
   return t - (date-1);
 }
-//divide by 29.53 to get lunar cycles since date input
+//calculate the current lunation number based on our 1970 reference point
 function calcLunationNumber(date){
-  const lunation = 29.53;
-  var l = daysSince1970Date(date)/lunation;
-  return l;
+  let l = daysSince1970Date(date)/lunation;
+  return Math.floor(l);
 }
 // modulus to find lunar age, or the percent of current lunar cycle complete.
 function calcCurrentLunarAge(date){
-  let la = ((calcLunationNumber(date) % Math.floor(calcLunationNumber(date))).toPrecision(4))*29;
-  console.log(Math.floor(calcLunationNumber(date)));
+  let ln =  daysSince1970Date(date)/lunation;
+  var la = ((ln % Math.floor(ln))*29.53).toPrecision(4);
   return la;
 }
-
-//multiply lunar age percentage by 2 to find illumination
+//find lunar age as a percentage and use it to calculate moon's illuminated surface
 function calcMoonIllumination(date){
-  let mi = (calcCurrentLunarAge(date) * 200);
+  let ln =  daysSince1970Date(date)/lunation;
+  let la = (ln % Math.floor(ln)).toPrecision(4)
+  console.log('illum func: la', la);
+  let mi = (la * 200);
   if (calcCurrentLunarAge(date) <= .5){
     return mi;
   }
@@ -29,53 +35,38 @@ function calcMoonIllumination(date){
     return Math.abs(1 - mi);
   }
 }
-
+//Function for positioning moon SVG to depict illumination
 function posMoon(){
-  var n = Date.now(),
-  d = (1000*60*60*24),
-  t = (n/d);
-  diff = t - (6-1);
-  const lunation = 29.53;
-  var l = diff/lunation;
-  let la = (l % Math.floor(l)).toPrecision(4);
-  var mi = (la * 200);
-  if (la <= .5){
+  let ln = daysSince1970Date(7)/lunation,
+      lnm = (ln % Math.floor(ln).toPrecision(4)),
+//our variable for moon illumination accounts for the x-position of the svg moon,
+//hence the arbitrary 200 and 50;
+      mi = lnm * 200 + 50;
+//A conditional is incorporated to depict waxing vs waning phases; will adjust if needed:
+  if (lnm <= .5){
     return mi;
   }
-  if (la > .5){
+  if (lnm > .5){
     return Math.abs(1-mi);
     console.log('lunar age greater than 50%');
   }
 }
+
+//Since our functions are using Jan 7 1970 as a reference point, all of
+//the functions take 7 as argument for the date parameter
 window.addEventListener("DOMContentLoaded", () =>{
   setTimeout(moonShift, 800);
   function moonShift(){
-    document.getElementById('moonShade').setAttribute('cx', (50+posMoon()));
-    document.getElementById('moonAge').text = "Today's Lunar Illumination"
+    document.getElementById('moonShade').setAttribute('cx', posMoon());
+    document.getElementById('moonAge').text = "Today's Moon: " + posMoon() +"% Illuminated";
   }
-  document.getElementById('day').addEventListener('click', ()=>{
-    let date = document.getElementById('dateInput').value;
-    if (1 < date <= 365){
-      document.getElementById('daysSince').innerHTML = daysSince1970Date(date);
-    }
-    if (date < 1 || date > 365){
-      let error = document.getElementById('daysSince').innerHTML = 'Day must be <= 365 ';
-      throw error
-    }
-  })
   document.getElementById('lunationButton').addEventListener('click',()=>{
-    let date = document.getElementById('dateInput').value;
-    document.getElementById('lunation').innerHTML = calcLunationNumber(date)
+    document.getElementById('lunation').innerHTML = calcLunationNumber(7)
   })
   document.getElementById('lunarAgeButton').addEventListener('click', ()=>{
-    let date = document.getElementById('dateInput').value;
-    document.getElementById('lunarAge').innerHTML = calcCurrentLunarAge(date) + ' Days';
-    
+    document.getElementById('lunarAge').innerHTML = 'About ' + Math.floor(calcCurrentLunarAge(7)) + ' Days';
   })
   document.getElementById('illButton').addEventListener('click', ()=>{
-    let date = document.getElementById('dateInput').value;
-    document.getElementById('ill').innerHTML = calcMoonIllumination(date).toPrecision(4) + ' ';
-    
-    
+    document.getElementById('ill').innerHTML = calcMoonIllumination(7).toPrecision(4) + '%';
   })
 })
