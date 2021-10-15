@@ -9,15 +9,11 @@
   <title>🌖🧀</title>
 </head>
 <body>
-  <svg id='moonPhase'>
-    <circle id='moonIllum' r='50'cy='100'cx='150'fill='#fff6d5'/>
-    <circle id='moonShade' r='50'cy='100'cx='150'fill='#1a1a1a'/>
-    <path id='moonFrame'd='M 0,0 V 200.0002 H 300.00028 V 0 Z m 150.00014,50.000047 a 50,50 0 0 1 50.00005,50.000053 50,50 0 0 1 -50.00005,50.00005 50,50 0 0 1 -50.00005,-50.00005 50,50 0 0 1 50.00005,-50.000053 z'/>
-  </svg>
-  <span id='moonAge'></span>
-  <div id="calculatorContainer">
+  <div id="everythingContainer">
+    <div id="calculatorContainer">
+
     <header><h1>Moon Age Calculator</h1></header>
-    <span>Note: calculations update in real time using the first New Moon of 1970 as a reference point. </span>
+    <span>Calculations use the first New Moon of 1970 as a reference point. </span>
     <br><br>
     <button type="button" id="lunationButton" name="lunation" >Find Current Lunation Number</button>
     <br><br>
@@ -26,10 +22,18 @@
     <button type="button" id="lunarAgeButton" name="lunarAge" >Find Current Lunar Age</button>
     <br><br>
     <span id="lunarAge" ></span>
+    <br>
+    <p id='moonAge'></p>
     <br><br>
-    <button type="button" id="illButton" name="ill" >Find Current Lunar Illumination</button>
-    <br><br>
-    <span id="ill" ></span>
   </div>
+  <div id="moonContainer">
+    <svg id='moonPhase'>
+        <circle id='moonIllum' r='50'cy='100'cx='150'fill='#fff6d5'/>
+        <circle id='moonShade' r='50'cy='100'cx='150'fill='#1a1a1a'/>
+        <path id='moonFrame'd='M 0,0 V 200.0002 H 300.00028 V 0 Z m 150.00014,50.000047 a 50,50 0 0 1 50.00005,50.000053 50,50 0 0 1 -50.00005,50.00005 50,50 0 0 1 -50.00005,-50.00005 50,50 0 0 1 50.00005,-50.000053 z'/>
+    </svg>
+
+  </div>
+</div>
 </body>
 </html>

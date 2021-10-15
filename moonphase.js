@@ -25,7 +25,7 @@ function calcCurrentLunarAge(date){
 //find lunar age as a percentage and use it to calculate moon's illuminated surface
 function calcMoonIllumination(date){
   let ln =  daysSince1970Date(date)/lunation;
-  let la = (ln % Math.floor(ln)).toPrecision(4)
+  let la = (ln % Math.floor(ln)).toPrecision(10)
   console.log('illum func: la', la);
   let mi = (la * 200);
   if (calcCurrentLunarAge(date) <= .5){
@@ -38,11 +38,11 @@ function calcMoonIllumination(date){
 //Function for positioning moon SVG to depict illumination
 function posMoon(){
   let ln = daysSince1970Date(7)/lunation,
-      lnm = (ln % Math.floor(ln).toPrecision(4)),
+      lnm = (ln % Math.floor(ln).toPrecision(10)),
 //our variable for moon illumination accounts for the x-position of the svg moon,
 //hence the arbitrary 200 and 50;
       mi = lnm * 200 + 50;
-//A conditional is incorporated to depict waxing vs waning phases; will adjust if needed:
+//A conditional to depict waxing vs waning phases; will adjust if needed:
   if (lnm <= .5){
     return mi;
   }
@@ -58,15 +58,12 @@ window.addEventListener("DOMContentLoaded", () =>{
   setTimeout(moonShift, 800);
   function moonShift(){
     document.getElementById('moonShade').setAttribute('cx', posMoon());
-    document.getElementById('moonAge').text = "Today's Moon: " + posMoon() +"% Illuminated";
+    document.getElementById('moonAge').innerHTML = "Today's Moon: " + calcMoonIllumination(7).toPrecision(4) +"% Illuminated";
   }
   document.getElementById('lunationButton').addEventListener('click',()=>{
     document.getElementById('lunation').innerHTML = calcLunationNumber(7)
   })
   document.getElementById('lunarAgeButton').addEventListener('click', ()=>{
     document.getElementById('lunarAge').innerHTML = 'About ' + Math.floor(calcCurrentLunarAge(7)) + ' Days';
-  })
-  document.getElementById('illButton').addEventListener('click', ()=>{
-    document.getElementById('ill').innerHTML = calcMoonIllumination(7).toPrecision(4) + '%';
   })
 })
