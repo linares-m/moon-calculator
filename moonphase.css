@@ -46,6 +46,6 @@ span, p {
   width: 280px;
   z-index: 1;
 }
-#moonShade {
+#moonIllum {
   transition: 3.6s ease;
 }
