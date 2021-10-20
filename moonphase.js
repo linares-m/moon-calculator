@@ -24,15 +24,22 @@ function calcCurrentLunarAge(date){
 }
 //find lunar age as a percentage and use it to calculate moon's illuminated surface
 function calcMoonIllumination(date){
-  let ln =  daysSince1970Date(date)/lunation;
-  let la = (ln % Math.floor(ln)).toPrecision(10)
-  console.log('illum func: la', la);
-  let mi = (la * 200);
-  if (calcCurrentLunarAge(date) <= .5){
+  var ln =  daysSince1970Date(date)/lunation;
+  console.log(ln);
+  var la = (ln % Math.floor(ln)).toPrecision(10);
+   console.log(la);
+//  console.log('illum func: la', la);
+  var mi = (la * 200);
+  console.log(mi);
+  if (mi < 100){
     return mi;
+    console.log('lunar age under 50%')
   }
-  if (calcCurrentLunarAge(date) > .5){
-    return Math.abs(1 - mi);
+  if (mi > 100){
+    let miModulus = mi%100;
+    let miWane = 100 - miModulus; 
+    return miWane;
+    console.log('lunar age over 50%')
   }
 }
 //Function for positioning moon SVG to depict illumination
